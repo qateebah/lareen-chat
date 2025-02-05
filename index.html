@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيان شات - دردشة عالمية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            transition: background-color 0.5s;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .header img {
+            width: 30px;
+            height: 20px;
+        }
+
+        .header h1 {
+            flex: 1;
+            text-align: center;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .alert-bar {
+            background-color: #ffcc00;
+            color: black;
+            text-align: center;
+            padding: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .buttons {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        .light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        .chat-rooms {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .room {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .room:hover {
+            background-color: #0056b3;
+        }
+
+        /* صندوق الدردشة */
+        .chat-box {
+            width: 300px;
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: right;
+        }
+
+        .messages {
+            height: 150px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            display: flex;
+        }
+
+        .input-box input {
+            flex: 1;
+            padding: 5px;
+        }
+
+        .input-box button {
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* الساعة الرقمية */
+        .clock {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        /* عداد الزوار */
+        .visitor-counter {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        /* تأثير التمرير */
+        .scroll-animation {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="alert-bar">مرحبًا بك في كيان شات! تواصل مع العالم الآن بسهولة.</div>
+
+    <div class="header">
+        <img src="https://via.placeholder.com/30x20" alt="شعار">
+        <h1>كيان شات</h1>
+        <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="#">الرئيسية</a>
+        <a href="#">غرف الدردشة</a>
+        <a href="#">التسجيل</a>
+        <a href="#">تسجيل الدخول</a>
+        <a href="#">اتصل بنا</a>
+    </div>
+
+    <div class="content">
+        <h2 class="scroll-animation">مرحبًا بك في كيان شات</h2>
+        <p class="scroll-animation">تواصل مع العالم عبر الدردشة المباشرة.</p>
+
+        <div class="buttons">
+            <button onclick="toggleDarkMode()">وضع الليل/النهار</button>
+            <button onclick="changeBackground()">تغيير لون الخلفية</button>
+        </div>
+
+        <h3>اختر غرفة الدردشة:</h3>
+        <div class="chat-rooms">
+            <div class="room" onclick="alert('تم الدخول إلى غرفة الشباب!')">غرفة الشباب</div>
+            <div class="room" onclick="alert('تم الدخول إلى غرفة البنات!')">غرفة البنات</div>
+            <div class="room" onclick="alert('تم الدخول إلى غرفة التقنية!')">غرفة التقنية</div>
+        </div>
+
+        <div class="chat-box">
+            <h3>الدردشة المباشرة</h3>
+            <div class="messages"></div>
+            <div class="input-box">
+                <input type="text" id="messageInput" placeholder="اكتب رسالتك...">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
+        </div>
+
+        <div class="clock"></div>
+        <div class="visitor-counter">عدد الزوار: <span id="visitorCount">1</span></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            document.body.classList.toggle("light-mode");
+        }
+
+        function changeBackground() {
+            var colors = ["#ffcccc", "#ccffcc", "#ccccff"];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function sendMessage() {
+            var input = document.getElementById("messageInput");
+            var message = input.value;
+            if (message.trim() !== "") {
+                document.querySelector(".messages").innerHTML += "<p>" + message + "</p>";
+                input.value = "";
+            }
+        }
+
+        setInterval(() => {
+            document.querySelector(".clock").innerText = new Date().toLocaleTimeString();
+        }, 1000);
+
+        let visitorCount = localStorage.getItem("visitorCount") || 1;
+        document.getElementById("visitorCount").innerText = visitorCount;
+        localStorage.setItem("visitorCount", ++visitorCount);
+
+        window.addEventListener("scroll", function() {
+            document.querySelectorAll(".scroll-animation").forEach(el => el.classList.add("visible"));
+        });
+    </script>
+
+</body>
+</html>
